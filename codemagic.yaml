@@ -1,0 +1,88 @@
+workflows:
+  native-android:
+    name: Native Android
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      android_signing:
+        - keystore_reference
+      groups:
+        - google_play
+      vars:
+        PACKAGE_NAME: "com.goroinfo.qjsk"
+    scripts:
+      - name: Set Android SDK location
+        script: | 
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+      - name: Build Android release
+        script: | 
+          LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
+          UPDATED_BUILD_NUMBER=1
+          ./gradlew bundleRelease -PversionCode=$UPDATED_BUILD_NUMBER -PversionName=1.0.$UPDATED_BUILD_NUMBER
+    artifacts:
+      - app/build/outputs/**/*.aab
+    publishing:
+      email:
+        recipients:
+          - goro3goro@gmail.com
+        notify:
+          success: true
+          failure: false
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+  ios-workflow:
+    name: iOS Workflow
+    max_build_duration: 120
+    integrations:
+      app_store_connect: goro3goro
+    environment:
+      ios_signing:
+        distribution_type: development # or: ad_hoc | development | enterprise | app_store
+        bundle_identifier: com.goroinfo.qjsk
+      vars:
+        APP_ID: 6446151147
+      flutter: stable
+    scripts:
+      - name: bundle identifier
+        script: | 
+          find **/*.xcodeproj -type f | xargs sed -i "" -E 's/PRODUCT_BUNDLE_IDENTIFIER = ".+";/PRODUCT_BUNDLE_IDENTIFIER = com.goroinfo.igo;/g'
+      - name: Set up code signing settings on Xcode project
+        script: | 
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: | 
+          flutter packages pub get
+      - name: Install pods
+        script: | 
+          find . -name "Podfile" -execdir pod install \;
+      - name: Flutter build ipa
+        script: | 
+          flutter build ipa --release --no-sound-null-safety \
+            --build-name=1.0.0 \
+            --build-number=1 \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - goro3goro@gmail.com
+        notify:
+          success: true
+          failure: false
+      app_store_connect:
+        auth: integration
+
+        # Configuration related to TestFlight (optional)
+        # Note: This action is performed during post-processing.
+        submit_to_testflight: true
+        beta_groups: # Specify the names of beta tester groups that will get access to the build once it has passed beta review.
+          - google_play
+
+        # Configuration related to App Store (optional)
+        # Note: This action is performed during post-processing.
+        submit_to_app_store: false
