@@ -47,7 +47,7 @@ workflows:
     scripts:
       - name: bundle identifier
         script: | 
-          find **/*.xcodeproj -type f | xargs sed -i "" -E 's/PRODUCT_BUNDLE_IDENTIFIER = ".+";/PRODUCT_BUNDLE_IDENTIFIER = com.goroinfo.igo;/g'
+          find **/*.xcodeproj -type f | xargs sed -i "" -E 's/PRODUCT_BUNDLE_IDENTIFIER = ".+";/PRODUCT_BUNDLE_IDENTIFIER = com.goroinfo.qjsk;/g'
       - name: Set up code signing settings on Xcode project
         script: | 
           xcode-project use-profiles
