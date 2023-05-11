@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _MyHomePageState() {
     bool ret = Util.fileRead();
-    if (ret) {
+    if (ret as bool) {
       Point bp = Point(10, 10);
       gbn.setStatus(bp, KURO);
       message = Util.getMessage();

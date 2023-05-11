@@ -10,7 +10,7 @@ class Util {
 
   static String message = "";
 
-  static Future<bool> fileRead() async {
+  static bool fileRead() {
     bool err = false;
     try {
       Future<String> path = loadAssetsFile("joseki.dat");
