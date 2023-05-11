@@ -6,15 +6,22 @@ const joseki = "assets/joseki.dat";
 class Util {
   static List<int> buf = [];
 
+  static String message = "";
+
   static bool fileRead() {
     bool err = false;
     try {
       var file = File(joseki);
       buf = file.readAsBytesSync();
     } catch (e) {
+      message = e.toString();
       err = true;
     }
     return err;
+  }
+
+  static String getMessage() {
+    return message;
   }
 
   static JosekiRecord readRecord(int rec) {

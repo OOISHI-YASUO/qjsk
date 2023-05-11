@@ -42,12 +42,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final Goban gbn = Goban("main");
 
   bool pass_view = false;
+  String message = "message";
 
   _MyHomePageState() {
     bool ret = Util.fileRead();
     if (ret) {
       Point bp = Point(10, 10);
       gbn.setStatus(bp, KURO);
+      message = Util.getMessage();
       return;
     }
     readKifu(1);
@@ -157,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
+            Text(message),
             //adContainer,
           ],
         ),

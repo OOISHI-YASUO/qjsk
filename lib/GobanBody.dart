@@ -14,7 +14,7 @@ const int ZOOM_LEFT_DOWN = 2;
 const int ZOOM_RIGHT_UP = 3;
 const int ZOOM_RIGHT_DOWN = 4;
 
-int button_height = 80;
+int button_height = 160; //80;
 
 // ignore: must_be_immutable
 class GobanBody extends StatelessWidget {
@@ -27,7 +27,7 @@ class GobanBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    button_height = size.width ~/ 8;
+    button_height = size.width ~/ 8 + 80;
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromRGBO(246, 168, 104, 1),
