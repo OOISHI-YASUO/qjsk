@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'dart:async';
 import 'dart:io';
 import 'JosekiRecord.dart';
 
@@ -8,16 +10,22 @@ class Util {
 
   static String message = "";
 
-  static bool fileRead() {
+  static Future<bool> fileRead() async {
     bool err = false;
     try {
-      var file = File(joseki);
+      Future<String> path = loadAssetsFile("joseki.dat");
+      message = path as String;
+      var file = File(path as String);
       buf = file.readAsBytesSync();
     } catch (e) {
-      message = e.toString();
+      message += e.toString();
       err = true;
     }
     return err;
+  }
+
+  static Future<String> loadAssetsFile(String name) async {
+    return rootBundle.loadString('assets/' + name);
   }
 
   static String getMessage() {
