@@ -57,19 +57,19 @@ class Goban {
     _name = name;
   }
 
-  void set ban_size(int bansize) {
+  set ban_size(int bansize) {
     _ban_size = bansize;
   }
 
-  void set ban_locate_x(int banlocatex) {
+  set ban_locate_x(int banlocatex) {
     _ban_locate_x = banlocatex;
   }
 
-  void set ban_locate_y(int banlocatey) {
+  set ban_locate_y(int banlocatey) {
     _ban_locate_y = banlocatey;
   }
 
-  void set isi_size(int isisize) {
+  set isi_size(int isisize) {
     _isi_size = isisize;
   }
 
@@ -81,26 +81,29 @@ class Goban {
 
   // ＸＹ反転
   void changeXY() {
-    if (xy == 0)
+    if (xy == 0) {
       xy = 1;
-    else
+    } else {
       xy = 0;
+    }
   }
 
   // 上下反転
   void changeYJ() {
-    if (yj == 0)
+    if (yj == 0) {
       yj = 1;
-    else
+    } else {
       yj = 0;
+    }
   }
 
   // 左右反転
   void changeXJ() {
-    if (xj == 0)
+    if (xj == 0) {
       xj = 1;
-    else
+    } else {
       xj = 0;
+    }
   }
 
   // 手数を取得する
@@ -222,8 +225,8 @@ class Goban {
 	 */
   void nextAll() {
     int tesu = getTesu();
-    int kiroku_tesu = getKirokuTesu();
-    while (tesu < kiroku_tesu) {
+    int kirokuTesu = getKirokuTesu();
+    while (tesu < kirokuTesu) {
       next();
       tesu = getTesu();
     }
@@ -426,8 +429,8 @@ class Goban {
   void tejun_prev() {
     int tesu = getTesu();
     if (tesu <= 0) return;
-    int kiroku_tesu = getKirokuTesu();
-    if (tesu != kiroku_tesu) return;
+    int kirokuTesu = getKirokuTesu();
+    if (tesu != kirokuTesu) return;
     bangoList.clear();
     selectHash.remove(tesu);
     recList.clear();
@@ -449,8 +452,8 @@ class Goban {
   void tejun_first() {
     int tesu = getTesu();
     if (tesu <= 0) return;
-    int kiroku_tesu = getKirokuTesu();
-    if (tesu != kiroku_tesu) return;
+    int kirokuTesu = getKirokuTesu();
+    if (tesu != kirokuTesu) return;
     bangoList.clear();
     selectHash.remove(tesu);
     recList.clear();

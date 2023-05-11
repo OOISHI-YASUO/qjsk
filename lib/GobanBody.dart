@@ -8,11 +8,11 @@ import 'Goban.dart';
 /*
 	 * 拡大に関する定義
 	 */
-final int ZOOM_NONE = 0;
-final int ZOOM_LEFT_UP = 1;
-final int ZOOM_LEFT_DOWN = 2;
-final int ZOOM_RIGHT_UP = 3;
-final int ZOOM_RIGHT_DOWN = 4;
+const int ZOOM_NONE = 0;
+const int ZOOM_LEFT_UP = 1;
+const int ZOOM_LEFT_DOWN = 2;
+const int ZOOM_RIGHT_UP = 3;
+const int ZOOM_RIGHT_DOWN = 4;
 
 int button_height = 80;
 
@@ -20,16 +20,16 @@ int button_height = 80;
 class GobanBody extends StatelessWidget {
   Goban gbn = Goban("GobanBody");
 
-  GobanBody(goban) {
+  GobanBody(goban, {super.key}) {
     gbn = goban;
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    button_height = (size.width / 8).toInt();
+    button_height = size.width ~/ 8;
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color.fromRGBO(246, 168, 104, 1),
       ),
       width: size.width,
@@ -72,7 +72,7 @@ class _GobanPainter extends CustomPainter {
     ban_size = gbn.ban_size;
     screen_width = size.width.toInt();
     screen_height = size.height.toInt() - button_height;
-    isi_size = (screen_width / 12).toInt();
+    isi_size = screen_width ~/ 12;
     gbn.isi_size = isi_size;
     isi_half = (isi_size / 2).floor();
     isi_quarter = (isi_size / 4).floor();
@@ -126,8 +126,8 @@ class _GobanPainter extends CustomPainter {
     //番号を表示する
     showBango(canvas);
     int tesu = gbn.getTesu();
-    int kiroku_tesu = gbn.getKirokuTesu();
-    if (tesu < kiroku_tesu) {
+    int kirokuTesu = gbn.getKirokuTesu();
+    if (tesu < kirokuTesu) {
       showMark(canvas);
     }
   }
@@ -171,8 +171,8 @@ class _GobanPainter extends CustomPainter {
   void showSelectMark(Canvas canvas) {
     if (gbn.recList.isEmpty) return;
     int tesu = gbn.tjn.tesu;
-    int kiroku_tesu = gbn.getKirokuTesu();
-    if (tesu < kiroku_tesu) return;
+    int kirokuTesu = gbn.getKirokuTesu();
+    if (tesu < kirokuTesu) return;
     gbn.select_pass = false;
     for (int i = 0; i < gbn.recList.length; i++) {
       JosekiRecord jr = gbn.recList.elementAt(i);
@@ -204,7 +204,7 @@ class _GobanPainter extends CustomPainter {
     } else if (col == 4) {
       paint.color = Colors.green;
     }
-    int r = (isi_size / 6).toInt();
+    int r = isi_size ~/ 6;
     int x1 = ban_locate_x + (bx - 1) * isi_size + isi_half;
     int y1 = ban_locate_y + (by - 1) * isi_size + isi_half;
     double dx1 = (x1 - r).toDouble();
@@ -220,8 +220,8 @@ class _GobanPainter extends CustomPainter {
         List.generate(21, (_) => List.generate(21, (_) => false));
 
     int tesu = gbn.getTesu();
-    int kiroku_tesu = gbn.getKirokuTesu();
-    if (tesu == kiroku_tesu && gbn.bangoList.isNotEmpty) {
+    int kirokuTesu = gbn.getKirokuTesu();
+    if (tesu == kirokuTesu && gbn.bangoList.isNotEmpty) {
       if (gbn.bangoList.length >= 2) {
         for (int i = 0; i < gbn.bangoList.length; i++) {
           Point bp = gbn.bangoList.elementAt(i);
@@ -235,14 +235,14 @@ class _GobanPainter extends CustomPainter {
 
   // 番号を描く
   void drawBango(Canvas canvas, Point bp, int su) {
-    double font_size = isi_half.toDouble();
+    double fontSize = isi_half.toDouble();
     var textStyleB = TextStyle(
       color: Colors.black,
-      fontSize: font_size,
+      fontSize: fontSize,
     );
     var textStyleW = TextStyle(
       color: Colors.white,
-      fontSize: font_size,
+      fontSize: fontSize,
     );
     final TextPainter textPainterB = TextPainter(
         text: TextSpan(text: su_str, style: textStyleB),
@@ -303,20 +303,20 @@ class _GobanPainter extends CustomPainter {
   }
 
   // 拡大する
-  void zoom(int zoom_mode) {
+  void zoom(int zoomMode) {
     //碁石と碁盤の大きさを決める
     ban_width = ban_size * isi_size;
     //碁盤の位置を決める
-    if (zoom_mode == ZOOM_NONE || zoom_mode == ZOOM_LEFT_UP) {
+    if (zoomMode == ZOOM_NONE || zoomMode == ZOOM_LEFT_UP) {
       ban_locate_x = ban_locate_x_default;
       ban_locate_y = ban_locate_y_default;
-    } else if (zoom_mode == ZOOM_RIGHT_UP) {
+    } else if (zoomMode == ZOOM_RIGHT_UP) {
       ban_locate_x = ban_locate_x_default + screen_width - ban_width;
       ban_locate_y = ban_locate_y_default;
-    } else if (zoom_mode == ZOOM_LEFT_DOWN) {
+    } else if (zoomMode == ZOOM_LEFT_DOWN) {
       ban_locate_x = ban_locate_x_default;
       ban_locate_y = ban_locate_y_default + screen_height - ban_width;
-    } else if (zoom_mode == ZOOM_RIGHT_DOWN) {
+    } else if (zoomMode == ZOOM_RIGHT_DOWN) {
       ban_locate_x = ban_locate_x_default + screen_width - ban_width;
       ban_locate_y = ban_locate_y_default + screen_height - ban_width;
     }
@@ -343,9 +343,9 @@ class _GobanPainter extends CustomPainter {
   // 上下入れ替え
   void changeYJ() {
     gbn.changeYJ();
-    if (zoom_mode == ZOOM_LEFT_DOWN)
+    if (zoom_mode == ZOOM_LEFT_DOWN) {
       zoom(ZOOM_LEFT_UP);
-    else if (zoom_mode == ZOOM_LEFT_UP)
+    } else if (zoom_mode == ZOOM_LEFT_UP)
       zoom(ZOOM_LEFT_DOWN);
     else if (zoom_mode == ZOOM_RIGHT_DOWN)
       zoom(ZOOM_RIGHT_UP);
@@ -355,9 +355,9 @@ class _GobanPainter extends CustomPainter {
   // 左右入れ替え
   void changeXJ() {
     gbn.changeXJ();
-    if (zoom_mode == ZOOM_LEFT_DOWN)
+    if (zoom_mode == ZOOM_LEFT_DOWN) {
       zoom(ZOOM_RIGHT_DOWN);
-    else if (zoom_mode == ZOOM_RIGHT_DOWN)
+    } else if (zoom_mode == ZOOM_RIGHT_DOWN)
       zoom(ZOOM_LEFT_DOWN);
     else if (zoom_mode == ZOOM_LEFT_UP)
       zoom(ZOOM_RIGHT_UP);

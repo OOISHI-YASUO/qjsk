@@ -8,7 +8,7 @@ import 'JosekiRecord.dart';
 
 void main() {
   //runApp(const MyApp());
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: MyApp(),
   ));
 }
@@ -44,7 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool pass_view = false;
 
   _MyHomePageState() {
-    Util.fileRead();
+    bool ret = Util.fileRead();
+    if (ret) {
+      Point bp = Point(10, 10);
+      gbn.setStatus(bp, KURO);
+      return;
+    }
     readKifu(1);
   }
 
@@ -54,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double button_size = size.width / 8;
+    double buttonSize = size.width / 8;
     return Scaffold(
       body: Center(
         child: Wrap(
@@ -75,63 +80,63 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/undo.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/first.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/prev.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/next.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/last.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/xychg.png"),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Container(
-                    height: button_size,
-                    width: button_size,
-                    decoration: BoxDecoration(
+                    height: buttonSize,
+                    width: buttonSize,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/home.png"),
                           fit: BoxFit.cover),
@@ -140,9 +145,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Visibility(
                     visible: pass_view,
                     child: Container(
-                      height: button_size,
-                      width: button_size,
-                      decoration: BoxDecoration(
+                      height: buttonSize,
+                      width: buttonSize,
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("assets/pass.png"),
                             fit: BoxFit.cover),
@@ -177,19 +182,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onTouchEvent(details) {
-    int isi_size = gbn.isi_size;
-    int ban_locate_x = gbn.ban_locate_x;
-    int ban_locate_y = gbn.ban_locate_y;
+    int isiSize = gbn.isi_size;
+    int banLocateX = gbn.ban_locate_x;
+    int banLocateY = gbn.ban_locate_y;
     Offset set = details.localPosition;
     int x = set.dx.toInt();
     int y = set.dy.toInt();
-    x = x - ban_locate_x;
-    y = y - ban_locate_y;
-    int gx = (x / isi_size).toInt() + 1;
-    int gy = (y / isi_size).toInt() + 1;
+    x = x - banLocateX;
+    y = y - banLocateY;
+    int gx = x ~/ isiSize + 1;
+    int gy = y ~/ isiSize + 1;
     if (gx < 1 || gy < 1) return;
-    int ban_size = gbn.ban_size;
-    if (gx > ban_size || gy > ban_size) return;
+    int banSize = gbn.ban_size;
+    if (gx > banSize || gy > banSize) return;
     Point bp = Point(gx, gy);
     deside(bp, true);
     setState(() {
@@ -203,10 +208,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onTouchEvent2(details) {
     Size size = MediaQuery.of(context).size;
-    double button_size = size.width / 8;
+    double buttonSize = size.width / 8;
     Offset set = details.localPosition;
     int x = set.dx.toInt();
-    if (x < button_size) {
+    if (x < buttonSize) {
       setState(() {
         gbn.tejun_prev();
         if (gbn.select_pass) {
@@ -215,33 +220,33 @@ class _MyHomePageState extends State<MyHomePage> {
           pass_view = false;
         }
       });
-    } else if (x < button_size * 2) {
+    } else if (x < buttonSize * 2) {
       setState(() {
         gbn.prevAll();
       });
-    } else if (x < button_size * 3) {
+    } else if (x < buttonSize * 3) {
       setState(() {
         gbn.prev();
       });
-    } else if (x < button_size * 4) {
+    } else if (x < buttonSize * 4) {
       setState(() {
         gbn.next();
       });
-    } else if (x < button_size * 5) {
+    } else if (x < buttonSize * 5) {
       setState(() {
         gbn.nextAll();
       });
-    } else if (x < button_size * 6) {
+    } else if (x < buttonSize * 6) {
       setState(() {
         gbn.changeXY();
       });
-    } else if (x < button_size * 7) {
+    } else if (x < buttonSize * 7) {
       setState(() {
         gbn.nextAll();
         gbn.tejun_first();
         readKifu(1);
       });
-    } else if (x < button_size * 8) {
+    } else if (x < buttonSize * 8) {
       setState(() {
         pass();
       });
@@ -298,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (choise) {
       bp = gbn.locateConv2(cp);
     }
-    int next_rec = 0;
+    int nextRec = 0;
     //int more_rec = 0;
     if (choise == true) {
       //画面から選択肢を選んだ場合
@@ -307,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
         JosekiRecord jr = gbn.recList.elementAt(i);
         if (jr.x == bp.x && jr.y == bp.y) {
           selected = true;
-          next_rec = jr.next_rec;
+          nextRec = jr.next_rec;
           //more_rec = jr.more_rec;
           break;
         }
@@ -315,9 +320,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (selected == false) {
         int sts = gbn.getStatus(cp);
         if (sts == KURO || sts == SIRO) {
-          int f_tesu = gbn.getThisTesu(cp);
+          int fTesu = gbn.getThisTesu(cp);
           gbn.bangoList.clear();
-          for (int i = f_tesu; i <= gbn.getTesu(); i++) {
+          for (int i = fTesu; i <= gbn.getTesu(); i++) {
             Point BL = gbn.getLocate(i);
             gbn.bangoList.add(BL);
           }
@@ -331,10 +336,10 @@ class _MyHomePageState extends State<MyHomePage> {
     if (gbn.isiUtu(bp) != 0) {
       return;
     }
-    if (next_rec > 0) {
+    if (nextRec > 0) {
       Point ap = Point(bp.x, bp.y);
       gbn.bangoList.add(ap);
-      readKifu(next_rec);
+      readKifu(nextRec);
     }
   }
 }

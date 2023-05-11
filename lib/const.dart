@@ -1,7 +1,7 @@
-final KUU = 0;
-final KURO = 1;
-final SIRO = 2;
-final HEN = 3;
+const KUU = 0;
+const KURO = 1;
+const SIRO = 2;
+const HEN = 3;
 
 //ツケの位置                     {上 右 下 左 上}
 final List<int> addx = [0, 1, 0, -1, 0];
