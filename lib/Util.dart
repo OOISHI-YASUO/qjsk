@@ -1,31 +1,32 @@
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
 import 'JosekiRecord.dart';
-
-const joseki = "assets/joseki.dat";
 
 class Util {
   static List<int> buf = [];
 
   static String message = "";
 
-  static bool fileRead() {
-    bool err = false;
+  static Future fileRead() async {
     try {
-      Future<String> path = loadAssetsFile("joseki.dat");
-      message = path as String;
-      var file = File(path as String);
+      final File file = await getImageFileFromAssets("joseki.dat");
       buf = file.readAsBytesSync();
     } catch (e) {
       message += e.toString();
-      err = true;
     }
-    return err;
   }
 
-  static Future<String> loadAssetsFile(String name) async {
-    return rootBundle.loadString('assets/' + name);
+  static Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file =
+        File('${(await getApplicationDocumentsDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
   }
 
   static String getMessage() {

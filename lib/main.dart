@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'const.dart';
 import 'GobanBody.dart';
@@ -42,21 +43,16 @@ class _MyHomePageState extends State<MyHomePage> {
   final Goban gbn = Goban("main");
 
   bool pass_view = false;
+  bool read_kifu = false;
   String message = "message";
 
   _MyHomePageState() {
-    bool ret = Util.fileRead();
-    if (ret as bool) {
-      Point bp = Point(10, 10);
-      gbn.setStatus(bp, KURO);
-      message = Util.getMessage();
-      return;
+    try {
+      Util.fileRead();
+    } catch (e) {
+      message = e.toString();
     }
-    readKifu(1);
   }
-
-  @override
-  //void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +181,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onTouchEvent(details) {
+    if (read_kifu == false) {
+      readKifu(1);
+      setState(() {
+        read_kifu = true;
+      });
+      return;
+    }
     int isiSize = gbn.isi_size;
     int banLocateX = gbn.ban_locate_x;
     int banLocateY = gbn.ban_locate_y;
