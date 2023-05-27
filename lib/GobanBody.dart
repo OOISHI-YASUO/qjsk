@@ -272,10 +272,10 @@ class _GobanPainter extends CustomPainter {
     double py = (ban_locate_y + (p.y - 1) * isi_size).toDouble();
     if (su < 10) {
       px += isi_quarter + isi_8;
-      py += isi_8 - 1;
+      py += isi_8 + 1;
     } else {
       px += isi_quarter;
-      py += isi_8 - 1;
+      py += isi_8 + 1;
     }
 
     var offset = Offset(px, py);
