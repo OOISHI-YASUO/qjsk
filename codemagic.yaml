@@ -53,6 +53,7 @@ workflows:
           xcode-project use-profiles
       - name: Get Flutter packages
         script: | 
+          flutter upgrade
           flutter packages pub get
       - name: Install pods
         script: | 
