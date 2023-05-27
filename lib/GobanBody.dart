@@ -27,7 +27,7 @@ class GobanBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    button_height = size.width ~/ 8 + 80;
+    button_height = size.width ~/ 8 + 0;
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromRGBO(246, 168, 104, 1),

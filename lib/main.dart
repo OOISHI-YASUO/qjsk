@@ -155,7 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Text(message),
             //adContainer,
           ],
         ),
