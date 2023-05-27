@@ -109,7 +109,7 @@ class _GobanPainter extends CustomPainter {
     int ad = 6;
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        drawHosi(canvas, x * ad + st, y * ad + st);
+        drawHosi(canvas, x * ad + st, y * ad + st, size);
       }
     }
     for (int y = 1; y <= ban_size; y++) {
@@ -286,7 +286,7 @@ class _GobanPainter extends CustomPainter {
     }
   }
 
-  void drawHosi(Canvas canvas, int x, int y) {
+  void drawHosi(Canvas canvas, int x, int y, Size size) {
     final paint = Paint()..color = Colors.black;
     double r = isi_half / 8;
     double d = isi_half / 4 - 1;
@@ -294,7 +294,9 @@ class _GobanPainter extends CustomPainter {
     if (d < 4) d = 4;
     double x1 = ban_locate_x + (x - 1) * isi_size + isi_half - r;
     double y1 = ban_locate_y + (y - 1) * isi_size + isi_half - r;
-    canvas.drawRect(Rect.fromLTWH(x1, y1, d, d), paint);
+    if (y1 + r < size.height) {
+      canvas.drawRect(Rect.fromLTWH(x1, y1, d, d), paint);
+    }
   }
 
   @override

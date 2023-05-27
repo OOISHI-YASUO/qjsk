@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:async';
+//import 'dart:async';
 import 'package:flutter/material.dart';
 import 'const.dart';
 import 'GobanBody.dart';
