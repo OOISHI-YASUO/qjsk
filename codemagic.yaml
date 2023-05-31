@@ -39,7 +39,7 @@ workflows:
       app_store_connect: goro3goro
     environment:
       ios_signing:
-        distribution_type: app_store # or: ad_hoc | development | enterprise | app_store
+        distribution_type: development # or: ad_hoc | development | enterprise | app_store
         bundle_identifier: com.goroinfo.qjsk
       vars:
         APP_ID: 6446151147

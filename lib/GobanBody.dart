@@ -135,8 +135,8 @@ class _GobanPainter extends CustomPainter {
   // 現在手番をマークする
   void showMark(Canvas canvas) {
     Point bp = gbn.getNowLocate();
-    Point p = gbn.locateConv(bp);
-    drawSelectMark(canvas, p, 0);
+    //Point p = gbn.locateConv(bp);
+    drawSelectMark(canvas, bp, 0);
   }
 
   // 石を描く
@@ -322,6 +322,8 @@ class _GobanPainter extends CustomPainter {
       ban_locate_x = ban_locate_x_default + screen_width - ban_width;
       ban_locate_y = ban_locate_y_default + screen_height - ban_width;
     }
+    gbn.ban_locate_x = ban_locate_x;
+    gbn.ban_locate_y = ban_locate_y;
   }
 
   void setZoomMode() {

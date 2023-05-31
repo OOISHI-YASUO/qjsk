@@ -174,9 +174,9 @@ class Goban {
       if (xj == 0 && yj == 0) {
         cp = Point(bp.y, bp.x);
       } else if (xj == 0 && yj == 1) {
-        cp = Point(bp.y, ban_size + 1 - bp.x);
+        cp = Point(bp.x, ban_size + 1 - bp.y);
       } else if (xj == 1 && yj == 0) {
-        cp = Point(ban_size + 1 - bp.y, bp.x);
+        cp = Point(bp.y, ban_size + 1 - bp.x);
       } else if (xj == 1 && yj == 1) {
         cp = Point(ban_size + 1 - bp.y, ban_size + 1 - bp.x);
       }
