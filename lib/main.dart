@@ -6,8 +6,20 @@ import 'GobanBody.dart';
 import 'Goban.dart';
 import 'Util.dart';
 import 'JosekiRecord.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+  //AdMobの初期化処理
+  if (ADMOB_MODE != 0) {
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      MobileAds.instance.initialize();
+    } catch (e, s) {
+      String str = "main ${e} ${s}";
+      print(str);
+    }
+  }
+
   //runApp(const MyApp());
   runApp(const MaterialApp(
     home: MyApp(),
@@ -41,6 +53,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final BannerAd myBanner = BannerAd(
+    adUnitId: AD_UNIT_ID,
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
+
+  final BannerAdListener listener = BannerAdListener(
+    // Called when an ad is successfully received.
+    onAdLoaded: (Ad ad) => debugPrint('Ad loaded.'),
+    // Called when an ad request failed.
+    onAdFailedToLoad: (Ad ad, LoadAdError error) {
+      // Dispose the ad here to free resources.
+      ad.dispose();
+      debugPrint('Ad failed to load: $error');
+    },
+    // Called when an ad opens an overlay that covers the screen.
+    onAdOpened: (Ad ad) => debugPrint('Ad opened.'),
+    // Called when an ad removes an overlay that covers the screen.
+    onAdClosed: (Ad ad) => debugPrint('Ad closed.'),
+    // Called when an impression occurs on the ad.
+    onAdImpression: (Ad ad) => debugPrint('Ad impression.'),
+  );
+
   final Goban gbn = Goban("main");
 
   bool undo_view = false;
@@ -61,9 +97,30 @@ class _MyHomePageState extends State<MyHomePage> {
       message = e.toString();
     }
   }
+  @override
+  void initState() {
+    super.initState();
+    if (ADMOB_MODE != 0) {
+      try {
+        myBanner.load();
+      } catch (e, s) {
+        String str = "load ${e} ${s}";
+        gbn.setMessage(str);
+        gbn.setError(true);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final AdWidget adWidget = AdWidget(ad: myBanner);
+    final Container adContainer = Container(
+      alignment: Alignment.center,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+      child: adWidget,
+    );
+
     Size size = MediaQuery.of(context).size;
     double buttonSize = size.width / 8;
     return Scaffold(
@@ -184,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            //adContainer,
+            adContainer,
           ],
         ),
       ),

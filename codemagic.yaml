@@ -39,7 +39,7 @@ workflows:
       app_store_connect: goro3goro
     environment:
       ios_signing:
-        distribution_type: app_store # or: ad_hoc | development | enterprise | app_store
+        distribution_type: development # or: ad_hoc | development | enterprise | app_store
         bundle_identifier: com.goroinfo.qjsk
       vars:
         APP_ID: 6446151147
@@ -61,8 +61,8 @@ workflows:
       - name: Flutter build ipa
         script: | 
           flutter build ipa --release \
-            --build-name=1.0.0 \
-            --build-number=1 \
+            --build-name=1.0.1 \
+            --build-number=2 \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa

@@ -31,6 +31,7 @@ class Goban {
   int get isi_size => _isi_size;
   int get ban_locate_x => _ban_locate_x;
   int get ban_locate_y => _ban_locate_y;
+  bool get error => _error;
 
   //作業領域
   List<List<bool>> cc =
@@ -41,14 +42,17 @@ class Goban {
   int xj = 0;
   int yj = 0;
 
-// 定石の選択肢
+  // 定石の選択肢
   List<JosekiRecord> recList = [];
 
-// 手順に対する定石の選択肢
+  // 手順に対する定石の選択肢
   Map<int, List<JosekiRecord>> selectHash = {};
 
-// 番号表示
+  // 番号表示
   List<Point> bangoList = [];
+  //エラー発生
+  bool _error = false;
+  String message = "";
 
 // パスを選択できる
   bool select_pass = false;
@@ -71,6 +75,14 @@ class Goban {
 
   set isi_size(int isisize) {
     _isi_size = isisize;
+  }
+
+  void setError(bool err) {
+    _error = err;
+  }
+
+  void setMessage(String mess) {
+    message = mess;
   }
 
   //次に打つ番の石色は

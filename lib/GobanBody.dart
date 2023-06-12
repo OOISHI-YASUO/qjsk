@@ -71,7 +71,7 @@ class _GobanPainter extends CustomPainter {
     gbn = goban;
     ban_size = gbn.ban_size;
     screen_width = size.width.toInt();
-    screen_height = size.height.toInt() - button_height;
+    screen_height = size.height.toInt() - button_height - 60;
     isi_size = screen_width ~/ 12;
     gbn.isi_size = isi_size;
     isi_half = (isi_size / 2).floor();
