@@ -86,7 +86,7 @@ class _GobanPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    screen_height = size.height.toInt() - button_height;
+    screen_height = size.height.toInt() - button_height - 60;
     ban_size = gbn.ban_size;
     //int ban_length = isi_size * ban_size;
     final paint = Paint()..color = Colors.black;
