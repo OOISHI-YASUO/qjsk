@@ -13,4 +13,4 @@ final int ADMOB_ANDROID = 2;
 
 //ca-app-pub-3940256099942544/2934735716 'test mode
 //ca-app-pub-6360703854329045/9879004530 'active mode
-final AD_UNIT_ID = "ca-app-pub-3940256099942544/2934735716";
+final AD_UNIT_ID = "ca-app-pub-6360703854329045/9879004530";
