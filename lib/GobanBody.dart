@@ -33,7 +33,7 @@ class GobanBody extends StatelessWidget {
         color: Color.fromRGBO(246, 168, 104, 1),
       ),
       width: size.width,
-      height: size.height - button_height,
+      height: size.height - button_height - 60,
       child: CustomPaint(
         painter: _GobanPainter(gbn, size),
       ),
