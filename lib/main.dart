@@ -241,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            adContainer,
+            //adContainer,
           ],
         ),
       ),
