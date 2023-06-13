@@ -113,7 +113,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    /*
     final AdWidget adWidget = AdWidget(ad: myBanner);
     final Container adContainer = Container(
       alignment: Alignment.center,
@@ -121,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
       height: myBanner.size.height.toDouble(),
       child: adWidget,
     );
-    */
 
     Size size = MediaQuery.of(context).size;
     double buttonSize = size.width / 8;
@@ -243,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            //adContainer,
+            adContainer,
           ],
         ),
       ),
