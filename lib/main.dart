@@ -132,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //crossAxisAlignment: CrossAxisAlignment.center,
           direction: Axis.horizontal,
           children: <Widget>[
+            adContainer,
             GestureDetector(
                 onTapDown: (details) => onTouchEvent(details),
                 onHorizontalDragEnd: (details) =>
@@ -241,7 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            adContainer,
+            //adContainer,
           ],
         ),
       ),
