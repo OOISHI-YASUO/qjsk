@@ -7,7 +7,7 @@ const HEN = 3;
 final List<int> addx = [0, 1, 0, -1, 0];
 final List<int> addy = [-1, 0, 1, 0, -1];
 
-final int ADMOB_MODE = 0;
+final int ADMOB_MODE = 1;
 final int ADMOB_IOS = 1;
 final int ADMOB_ANDROID = 2;
 
